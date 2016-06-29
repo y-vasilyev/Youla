@@ -1,0 +1,341 @@
+<div class="form form-secondary">
+	<form ng-submit="saveForm(orgForm.$valid)" name="orgForm" novalidate>
+		<div class="form-body">
+
+			<div class="org-info-image">
+
+                Дата создания {{data.CreationDateUtc | date:'dd.MM.yyyy'}}
+                <br /><br />
+                Привязка к карте <a ng-click="vm.geo_edit($event, data.id)" href="#">Редактировать</a>
+
+                <div class="map org-mini-map" id="mapOrg"></div>
+                <!--leaflet class="org-mini-map" defaults="defaults" lf-center="center" layers="layers" markers="markers"></leaflet-->
+
+			</div>
+
+			<div class="org-info-fields">
+
+    		    <strong ng-if="data.type == 'org'" class="org-info-title">
+    		     Карточка {{titleOrg}}
+    		    </strong>
+    		    <strong ng-if="data.type == 'geo'">
+    		     Географическая информация
+    		    </strong>
+
+    		    <span class="org-info-status">статус
+    		    	<strong class="{{statusClassOrg}}">{{statusOrg}}</strong>
+    		    </span>
+
+				<div class="form-actions org-actions">
+					<input type="submit" value="Сохранить" tabindex="6" ng-disabled="checkForm(orgForm.$invalid)" class="btn btn-sm btn-success btn-bold form-btn">
+					<input type="button" value="Отмена" ng-click="cancelForm($event)" tabindex="6" class="btn btn-sm btn-success btn-bold form-btn">
+					<input type="button" value="На проверку!" tabindex="6" ng-click="sendToCheckForm(orgForm.$valid)" ng-disabled="checkForm(orgForm.$invalid)" class="btn btn-sm btn-success btn-bold form-btn">
+				    <div class="message-status message-status-ok" ng-if="messageStatusVisible">Успешно сохранено</div>
+				    <div class="message-status message-status-error" ng-if="messageStatusErrorVisible">Ошибка при сохранении</div>
+
+				</div><!-- /.form-actions -->
+
+				<div class="row">
+					<div class="col-md-12" ng-if="data.type == 'org'">
+						<div class="form-row">
+                            <label for="field-title" ng-class="{ 'has-error-names' : orgForm.CardName.$invalid && !orgForm.CardName.$pristine }" class="form-label form-label-alpha form-label-required">Название</label>
+
+							<div class="form-controls">
+                                <input type="text" focus-if ng-minlength="2" ng-model="data.CardName"
+                                		class="form-control" name="CardName" id="field-title"
+                                		autocomplete="off"
+                                		placeholder="" tabindex="1" required />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+
+					<div class="col-md-12" ng-if="data.type == 'geo'">
+						<div class="form-row">
+                          <label for="field-geo_type" ng-class="{ 'has-error-names' : 0 }" class="form-label form-label-alpha">
+						    Тип
+                          </label>
+
+						  <select id="field-geo_type" class="form-control" ng-model="data.FeatureClass" ng-options="option.id as option.title for option in FeatureList">
+						    <option value="">Выберите тип</option>
+						  </select>
+
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+
+
+					<div class="col-md-12">
+						<div class="form-row">
+                            <label for="field-address" ng-class="{ 'has-error-names' : orgForm.address.$invalid && !orgForm.address.$pristine }" class="form-label form-label-alpha form-label-required">Адрес</label>
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="data.Address.Address" class="form-control"
+                                		autocomplete="off"
+                                		name="Address" id="field-address" placeholder="" tabindex="2" required />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-12" ng-if="data.type == 'org'">
+						<div class="form-row">
+                            <label for="field-AddressComment" ng-class="{ 'has-error-names' : orgForm.AddressComment.$invalid && !orgForm.AddressComment.$pristine }" class="form-label form-label-alpha">
+                             Комментарии к адресу (ориентир \ этаж \ офис \ павильон)
+                            </label>
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="data.Address.AddressComment" class="form-control"
+                                		autocomplete="off"
+                                		name="AddressComment" id="field-AddressComment" placeholder="" tabindex="2" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-12" ng-if="data.type == 'org'">
+						<div class="form-row">
+                          <label for="field-add-contact" ng-class="{ 'has-error-names' : !data.Contacts.length }" class="form-label form-label-alpha form-label-required">
+						    Контакты
+                          </label>
+
+                          <select id="field-add-contact" class="form-control org-add-contact" ng-model="vm.contactAddVal" ng-change="vm.contactAdd($event)">
+						    <option value="">Добавить контакт +</option>
+						    <option value="Phone">Телефон</option>
+						    <option value="Fax">Факс</option>
+						    <option value="Email">Электронный адрес</option>
+						    <option value="Web">Сайт</option>
+						    <option value="Icq">ICQ</option>
+						    <option value="Skype">Skype</option>
+						    <option value="Jabber">Jabber</option>
+						    <option value="Icq">ICQ</option>
+						    <option value="Icq">ICQ</option>
+						    <option value="Vkontakte">Vkontakte</option>
+						    <option value="Facebook">Facebook</option>
+						    <option value="Twitter">Twitter</option>
+						    <option value="Instagram">Instagram</option>
+						  </select>
+
+
+						  <ul class="org-contacts">
+						    <li class="org-contact-row" ng-repeat="row in data.Contacts track by $index">
+
+						      <strong>{{row.Type}}</strong>
+
+						      <input type="text" class="form-control" ng-model="row.Value" />
+						      <input type="text" class="form-control" ng-model="row.Comment" />
+
+						      <input type="button" ng-click="vm.contactDel($event, $index)" value="X" />
+						    </li>
+						  </ul>
+
+
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-12" ng-if="data.type == 'org'">
+						<div class="form-row">
+                            <label for="field-doing" ng-class="{ 'has-error-names' : orgForm.Rubrics.$invalid && !orgForm.Rubrics.$pristine }" class="form-label form-label-alpha form-label-required">
+                             Чем занимается
+                            </label>
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="data.Rubrics" class="form-control"
+                                		autocomplete="off"
+                                		name="Rubrics" id="field-doing" placeholder="" tabindex="2" required />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+
+					<div class="col-md-12" ng-if="data.type == 'org'">
+						<div class="form-row">
+                          <label for="field-working" ng-class="{ 'has-error-names' : vm.hasWorkingErrors }" class="form-label form-label-alpha form-label-required">
+						    Время работы
+                          </label>
+
+
+                          <input class="org-working-add" type="button" value="+" ng-click="vm.workingAdd($event)" />
+
+                          <select id="field-working" class="form-control org-working-select" ng-options="option.Name for option in working_tpls" ng-model="vm.addWorkingVal" ng-change="vm.addWorking($event)">
+						    <option value="">Выберите шаблон</option>
+						  </select>
+
+
+						  <ul class="org-working">
+						    <li class="org-working-row" ng-repeat="row in data.Schedule track by $index">
+
+						      <input class="org-working-del" type="button" ng-click="vm.workingDel($event, $index)" value="X" />
+
+						      <ul class="working-days">
+						        <li ng-click="vm.workingDayToggle($index, 1)" ng-class="{active:row.ScheduleDays.indexOf(1) != -1}">ПН</li>
+						        <li ng-click="vm.workingDayToggle($index, 2)" ng-class="{active:row.ScheduleDays.indexOf(2) != -1}">ВТ</li>
+						        <li ng-click="vm.workingDayToggle($index, 3)" ng-class="{active:row.ScheduleDays.indexOf(3) != -1}">СР</li>
+						        <li ng-click="vm.workingDayToggle($index, 4)" ng-class="{active:row.ScheduleDays.indexOf(4) != -1}">ЧТ</li>
+						        <li ng-click="vm.workingDayToggle($index, 5)" ng-class="{active:row.ScheduleDays.indexOf(5) != -1}">ПТ</li>
+						        <li ng-click="vm.workingDayToggle($index, 6)" ng-class="{active:row.ScheduleDays.indexOf(6) != -1}">СБ</li>
+						        <li ng-click="vm.workingDayToggle($index, 7)" ng-class="{active:row.ScheduleDays.indexOf(7) != -1}">ВС</li>
+						      </ul>
+
+						      <div class="working-hours">
+									<ul class="list-checkboxes list-checkboxes-alpha">
+										<li>
+											<div class="checkbox">
+												<input type="checkbox" id="field-roundday-{{$index}}" ng-model="row.Roundday">
+
+												<span class="btn btn-gray btn-xs">
+													<i class="fa fa-check"></i>
+												</span><!-- /.btn btn-xs -->
+
+												<label for="field-roundday-{{$index}}" class="form-label">Круглосуточно</label>
+											</div><!-- /.checkbox -->
+										</li>
+									</ul>
+
+									<div ng-if="!row.Roundday">
+                                      <select class="form-control" ng-model="row.workStartHour" ng-options="option for option in workHours">
+									  </select>
+									  :
+                                      <select class="form-control" ng-model="row.workStartMin" ng-options="option for option in workMinutes">
+									  </select>
+									  -
+                                      <select class="form-control" ng-model="row.workEndHour" ng-options="option for option in workHours">
+									  </select>
+									  :
+                                      <select class="form-control" ng-model="row.workEndMin" ng-options="option for option in workMinutes">
+									  </select>
+								   </div>
+							  </div>
+
+						      <div class="working-eat" ng-if="!row.Roundday">
+									<ul class="list-checkboxes list-checkboxes-alpha">
+										<li>
+											<div class="checkbox">
+												<input type="checkbox" id="field-eat_exists-{{$index}}" ng-model="row.BreakExists">
+
+												<span class="btn btn-gray btn-xs">
+													<i class="fa fa-check"></i>
+												</span><!-- /.btn btn-xs -->
+
+												<label for="field-eat_exists-{{$index}}" class="form-label">Обеденный перерыв</label>
+											</div><!-- /.checkbox -->
+										</li>
+									</ul>
+
+									<div ng-if="row.BreakExists">
+                                      <select class="form-control" ng-model="row.breakStartHour" ng-options="option for option in workHours">
+									  </select>
+									  :
+                                      <select class="form-control" ng-model="row.breakStartMin" ng-options="option for option in workMinutes">
+									  </select>
+									  -
+                                      <select class="form-control" ng-model="row.breakEndHour" ng-options="option for option in workHours">
+									  </select>
+									  :
+                                      <select class="form-control" ng-model="row.breakEndMin" ng-options="option for option in workMinutes">
+									  </select>
+								   </div>
+							  </div>
+
+							  <br /><br />
+						      <input class="org-working-comment form-control" type="text" ng-model="row.Comment" placeholder="--комментарий--" />
+
+						    </li>
+						  </ul>
+
+
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+
+					<div class="col-md-12">
+						<div class="form-row">
+                            <label for="field-additional" ng-class="{ 'has-error-names' : orgForm.Additional.$invalid && !orgForm.Additional.$pristine }" class="form-label form-label-alpha">
+                             Дополнительно
+                            </label>
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="data.Additional" class="form-control"
+                                		autocomplete="off"
+                                		name="Additional" id="field-additional" placeholder="" tabindex="2" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-12">
+						<hr>
+						<div class="form-row">
+                            <label class="form-label form-label-alpha">
+                             Вложенные файлы:
+                            </label>
+
+					        <a class="org-attachment" ng-repeat="row in files" target="_blank" href="/Attachments/File/{{row.Uid}}">{{row.FileName}}, {{row.Length/1024}} Kb</a>
+
+						</div><!-- /.form-row -->
+					</div>
+
+
+					<div class="col-md-12">
+						<div class="form-row">
+                            <label for="field-comment" ng-class="{ 'has-error-names' : orgForm.comment.$invalid && !orgForm.comment.$pristine }" class="form-label form-label-alpha">
+                             Внутренний комментарий
+                            </label>
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="data.comment" class="form-control"
+                                		autocomplete="off"
+                                		name="comment" id="field-comment" placeholder="" tabindex="2" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+
+					<div class="col-md-12">
+						<hr>
+						<div class="form-row">
+                            <label class="form-label form-label-alpha">
+                             Комментарии
+                            </label>
+
+                            <div class="org-comment" ng-repeat="row in Comments"><strong>{{row.CreatedBy}}</strong><br />{{row.Text}}</div>
+
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="vm.newcomment" class="form-control"
+                                		autocomplete="off"
+                                		name="newcomment" placeholder="" tabindex="2" />
+                                <br />
+                                <input ng-click="vm.commentAdd($event)" type="submit" value="Добавить комментарий" class="btn btn-sm btn-success btn-bold form-btn" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+
+
+				</div><!-- /.row -->
+
+
+
+			</div>
+
+		</div><!-- /.form-body -->
+
+		<div class="clear"></div>
+
+				<div class="error" ng-show="orgForm.$invalid">
+                    <p ng-show="orgForm.CardName.$invalid && !orgForm.CardName.$pristine" class="help-block">Oops! You haven't entered your full name!</p>
+                    <p ng-show="orgForm.CardName.$error.minlength" class="help-block">First name must be a minimum of 2 letters</p>
+
+                    <p ng-show="orgForm.doing.$invalid && !orgForm.doing.$pristine" class="help-block">Oops! You haven't entered your last name!</p>
+                    <p ng-show="orgForm.doing.$error.minlength" class="help-block">doing name must be a minimum of 15 numbers</p>
+
+                    <p ng-show="orgForm.email.$invalid && !orgForm.email.$pristine" class="help-block">Please enter a valid email doing</p>
+
+                    <p ng-show="orgForm.gender.$invalid && !orgForm.gender.$pristine" class="help-block">Don't forget to select a gender!</p>
+				</div><!-- /.error -->
+
+				<div class="error">
+                    <p>{{errorMessage}}</p>
+				</div><!-- /.error -->
+
+	</form>
+
+</div>

@@ -1,0 +1,24 @@
+Территориальное разбиение города {{cityTitle}} на зоны:
+
+<div ui-grid="gridOptions" class="grid city-zones"></div>
+
+<div class="city-zones-map">
+     <div id="mapZone" class="map"></div>
+
+     <div class="city-zones-map-info" ng-show="mapInfoShow">
+      {{info.Name}}, Строений {{info.BuildingsTotal}}
+      <br />
+      Цена {{info.CardCost}} руб за организацию
+      <br />
+      {{info.StatusTitle}}
+     </div>
+
+     <div class="city-zones-map-ask" ng-show="mapAskWorkShow">
+      Взять зону {{info.Name}} в работу?
+     <br />
+		<a ng-click="vm.cancel($event)" href="#" class="btn btn-success btn-bold">Нет</a>
+
+		<a ng-click="vm.submit($event)" href="#" class="btn btn-default btn-bold">Да</a>
+
+     </div>
+</div>

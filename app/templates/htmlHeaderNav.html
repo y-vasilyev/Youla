@@ -1,0 +1,24 @@
+<div class="nav-menu">
+	<ul>
+		<li ng-class="{current: url=='/'}">
+			<a ui-sref="app.index">Главная</a>
+		</li>
+
+		<li ng-class="{current: url=='cities'}">
+			<a ui-sref="app.cities">Города</a>
+		</li>
+
+		<li ng-class="{current: state_name.indexOf('.about') != -1}">
+			<a ui-sref="app.about">Как это работает</a>
+		</li>
+
+		<li ng-class="{current: url=='contacts'}">
+			<a ui-sref="app.contacts">Контакты</a>
+		</li>
+
+		<li ng-class="{current: url=='faq'}">
+			<a ui-sref="app.faq">FAQ</a>
+		</li>
+
+	</ul>
+</div>

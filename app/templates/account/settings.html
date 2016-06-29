@@ -1,0 +1,329 @@
+    				<div class="form form-secondary">
+    					<form ng-submit="saveForm(accountForm.$valid)" name="accountForm" novalidate>
+    						<div class="form-body">
+
+    						    <h4>Профиль</h4>
+
+                				<div class="account-info-image">
+                                    <div
+                                         class="avatar"
+                                         ng-if="user.hasImage">
+
+                                    		<a ng-click="popup_upload_photo($event)" href="#">
+                                    		  <img ng-src="{{user.image.src}}" />
+                                    		</a>
+                                    </div>
+
+
+                                    <div ng-if="!user.hasImage">
+                                        {{user.DisplayName}}
+                                        <br />
+                                    	<a ng-click="popup_upload_photo($event)" href="#">
+                                    	  загрузить фото
+                                    	</a>
+                                    </div>
+
+                                    <br /><br />
+                                    Работаю с {{user.Registered | date:'dd.MM.yyyy'}}
+
+                				</div>
+
+                				<div class="account-info-fields">
+
+        							<div class="row">
+        								<div class="col-md-6">
+        									<div class="form-row">
+                                                <label for="field-DisplayName" ng-class="{ 'has-error-names' : accountForm.DisplayName.$invalid && !accountForm.DisplayName.$pristine }" class="form-label form-label-alpha form-label-required">Как к вам обращаться?</label>
+
+        										<div class="form-controls">
+                                                    <input type="text" focus-if ng-minlength="2" ng-model="user.DisplayName"
+                                                    		class="form-control" name="DisplayName" id="field-DisplayName"
+                                                    		autocomplete="off"
+                                                    		placeholder="" tabindex="1" required />
+        										</div><!-- /.form-controls -->
+        									</div><!-- /.form-row -->
+        								</div><!-- /.col-md-6 -->
+
+        								<div class="col-md-6">
+        									<div class="form-row">
+                                                <label for="field-PhoneNumber" ng-class="{ 'has-error-names' : accountForm.PhoneNumber.$invalid && !accountForm.PhoneNumber.$pristine }" class="form-label form-label-alpha form-label-required">Телефон</label>
+
+        										<div class="form-controls">
+                                                    <input type="text" ng-minlength="2" ng-model="user.PhoneNumber" class="form-control"
+                                                    		autocomplete="off"
+        	                                                ng-pattern="/^[0-9]{11}$/"
+                                                    		name="PhoneNumber" id="field-PhoneNumber" placeholder="79876543210" tabindex="2" required />
+        										</div><!-- /.form-controls -->
+        									</div><!-- /.form-row -->
+        								</div><!-- /.col-md-6 -->
+
+        								<div class="col-md-6">
+        									<div class="form-row">
+                                                <label for="field-Email" class="form-label form-label-alpha form-label-required" ng-class="{ 'has-error-names' : accountForm.Email.$invalid && !accountForm.Email.$pristine }">E-mail</label>
+
+        										<div class="form-controls">
+        											<input type="Email"
+                                                       name="Email"
+                                                       ng-model="user.Email"
+                                                       tabindex="3"
+                                                       placeholder="Например, petr@2gis.ru"
+                                                       ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                                                  		autocomplete="off"
+                                                       required
+        				                           		class="form-control" id="field-Email" />
+        										</div><!-- /.form-controls -->
+        									</div><!-- /.form-row -->
+        								</div><!-- /.col-md-6 -->
+
+        								<div class="col-md-6">
+        									<div class="form-row">
+                                                <label for="field-Email_too" class="form-label form-label-alpha form-label-required" ng-class="{ 'has-error-names' : accountForm.Email_too.$invalid && !accountForm.Email_too.$pristine }">E-mail ещё раз</label>
+
+        										<div class="form-controls">
+        											<input type="Email"
+                                                       name="Email_too"
+                                                       ng-model="user.Email_too"
+                                                       tabindex="3"
+                                                       placeholder="Email ещё раз"
+                                                       ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                                                  	   autocomplete="off"
+                                                       required
+        				                           		class="form-control" id="field-Email_too" />
+        										</div><!-- /.form-controls -->
+        									</div><!-- /.form-row -->
+        								</div><!-- /.col-md-6 -->
+
+        								<div class="col-md-6">
+        									<div class="form-row">
+                                                <label for="field-BirthDate" class="form-label form-label-alpha" ng-class="{ 'has-error-names' : accountForm.BirthDate.$invalid && !accountForm.BirthDate.$pristine }">Дата рождения: дд.мм.гггг</label>
+
+        										<div class="form-controls">
+        											<input type="BirthDate"
+                                                       name="BirthDate"
+
+                                                       moment-picker="user.BirthDate_set"
+                                                       format="DD.MM.YYYY"
+                                                       today="true"
+                                                       start-view="day"
+
+                                                       ng-model="user.BirthDate_set"
+
+                                                       tabindex="3"
+                                                       placeholder="dd.mm.yyyy"
+                                                       ng-pattern="/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/"
+                                                  		autocomplete="off"
+        				                           		class="form-control" id="field-BirthDate" />
+        										</div><!-- /.form-controls -->
+        									</div><!-- /.form-row -->
+        								</div><!-- /.col-md-6 -->
+
+        								<div class="col-md-6">
+        									<div class="form-row">
+
+                                                <label for="field-Sex" class="form-label form-label-alpha" ng-class="{ 'has-error-names' : 0 }">Пол:</label>
+
+                        						<ul class="list-radios">
+                                    				<li ng-repeat="item in genreList">
+                        								<div class="radio-secondary">
+                                                            <input type="radio" ng-model="user.Sex" ng-value="item.value" name="Sex" id="field-{{ item.text }}" />
+
+                                    						<label for="field-{{ item.text }}" class="form-label form-control">{{ item.text }}</label>
+                        								</div><!-- /.radio -->
+                        							</li>
+                        						</ul><!-- /.list-radios -->
+
+
+        									</div><!-- /.form-row -->
+        								</div><!-- /.col-md-6 -->
+        							</div><!-- /.row -->
+
+                               		<h4>Оплата</h4>
+
+                                    <div class="form-section">
+
+                                    	<div class="form-section-body">
+                                    		<div class="form">
+                                    				<div class="form-body">
+
+                               							<p>Как часто вы предпочитаете получать оплату:</p>
+
+                                    					<div class="row">
+                                    						<div class="col-md-12">
+
+
+                                            					<ul class="list-radios list-radios-block">
+                                            						<li>
+                                            							<div class="radio">
+                                            								<input type="radio" ng-model="user.PaymentScheduleType" value="OnDemand" name="PaymentScheduleType" id="pay-counts-per" />
+
+                                            								<i class="ico-radio"></i>
+
+                                            								<label for="pay-counts-per" class="form-label">По явному требованию</label>
+                                            							</div><!-- /.radio -->
+                                            						</li>
+
+                                            						<li>
+                                            							<div class="radio">
+                                            								<input type="radio" ng-model="user.PaymentScheduleType" value="Auto" name="PaymentScheduleType" id="pay-counts-summ" />
+
+                                            								<i class="ico-radio"></i>
+
+                                            								<label for="pay-counts-summ" class="form-label">
+                                            								 Автоматически, если сумма на счету больше чем
+                                            								</label>
+
+                                                                            <input type="text" ng-model="user.MinPaymentLimit" name="pay-counts-summ-value" /> руб.
+
+                                            							</div><!-- /.radio -->
+
+                                            						</li>
+                                            					</ul><!-- /.list-radios -->
+
+
+                                    						</div><!-- /.col-md-12 -->
+
+                                    					</div><!-- /.row -->
+
+
+                               							<p>Выберите один из способов вывода:</p>
+
+                                    					<div class="row">
+                                    						<div class="col-md-12">
+
+
+
+                                            					<ul class="list-radios list-radios-block list-radios-block-left">
+                                            						<li>
+                                            							<div class="radio">
+                                            								<input type="radio" ng-model="user.PaymentMethodType" value="Sberbank" name="PaymentMethodType" id="pay-type-0" />
+
+                                            								<i class="ico-radio"></i>
+
+                                            								<label for="pay-type-0" class="form-label">
+                                            								 На карту сбербанка
+                                            								</label>
+                                            							</div><!-- /.radio -->
+                                            						</li>
+
+                                            						<li>
+                                            							<div class="radio">
+                                            								<input type="radio" ng-model="user.PaymentMethodType" value="MobilePhone" name="PaymentMethodType" id="pay-type-1" />
+
+                                            								<i class="ico-radio"></i>
+
+                                            								<label for="pay-type-1" class="form-label">
+                                            								 На счет на телефон
+                                            								</label>
+
+                                            							</div><!-- /.radio -->
+                                            						</li>
+
+                                            						<li>
+                                            							<div class="radio">
+                                            								<input type="radio" ng-model="user.PaymentMethodType" value="Card" name="PaymentMethodType" id="pay-type-2" />
+
+                                            								<i class="ico-radio"></i>
+
+                                            								<label for="pay-type-2" class="form-label">
+                                            								 На карту любого банка
+                                            								</label>
+
+                                            							</div><!-- /.radio -->
+                                            						</li>
+                                            						<li>
+                                            							<div class="radio">
+                                            								<input type="radio" ng-model="user.PaymentMethodType" value="YandexMoney" name="PaymentMethodType" id="pay-type-3" />
+
+                                            								<i class="ico-radio"></i>
+
+                                            								<label for="pay-type-3" class="form-label">
+                                            								 Яндекс деньги
+                                            								</label>
+
+                                            							</div><!-- /.radio -->
+                                            						</li>
+
+                                            					</ul><!-- /.list-radios -->
+
+
+                                            					<ul class="list-texts">
+                                            						<li>
+                                            							<div class="form-text">
+                                            								<input type="text" ng-model="user.payTypeSber" name="payTypeSber" />
+                                            								<label class="form-label">
+                                            								 Номер телефона или номер карты
+                                            								</label>
+                                            							</div>
+                                            						</li>
+
+                                            						<li>
+                                            							<div class="form-text">
+                                            								<input type="text" ng-model="user.payTypePhoneNumber" name="payTypePhoneNumber" />
+                                            								<label class="form-label">
+                                            								 Номер телефона
+                                            								</label>
+                                            							</div>
+                                            						</li>
+
+                                            						<li>
+                                            							<div class="form-text">
+                                            								<input type="text" ng-model="user.payTypeCard" name="payTypeCard" />
+                                            								<label class="form-label">
+                                            								 Номер карты
+                                            								</label>
+                                            							</div>
+                                            						</li>
+                                            						<li>
+                                            							<div class="form-text">
+                                            								<input type="text" ng-model="user.payTypeYandex" name="payTypeYandex" />
+                                            								<label class="form-label">
+                                            								 счет яндекс кошелька
+                                            								</label>
+                                            							</div>
+                                            						</li>
+
+                                            					</ul><!-- /.list-radios -->
+
+
+                                    						</div><!-- /.col-md-12 -->
+
+                                    					</div><!-- /.row -->
+
+
+                                    				</div><!-- /.form-body -->
+                                    		</div><!-- /.form -->
+                                    	</div><!-- /.form-section-body -->
+                                    </div><!-- /.form-section -->
+
+
+
+
+        						</div>
+
+    						</div><!-- /.form-body -->
+
+    						<div class="clear"></div>
+
+        							<div class="error" ng-show="accountForm.$invalid">
+                                        <p ng-show="accountForm.DisplayName.$invalid && !accountForm.DisplayName.$pristine" class="help-block">Oops! You haven't entered your name!</p>
+                                        <p ng-show="accountForm.DisplayName.$error.minlength" class="help-block">First name must be a minimum of 2 letters</p>
+
+                                        <p ng-show="accountForm.PhoneNumber.$invalid && !accountForm.PhoneNumber.$pristine" class="help-block">Oops! You haven't entered your PhoneNumber!</p>
+                                        <p ng-show="accountForm.PhoneNumber.$error.minlength" class="help-block">PhoneNumber name must be a minimum of 15 numbers</p>
+
+                                        <p ng-show="accountForm.Email.$invalid && !accountForm.Email.$pristine" class="help-block">Please enter a valid Email address</p>
+
+                                        <p ng-show="accountForm.Sex.$invalid && !accountForm.Sex.$pristine" class="help-block">Don't forget to select a Sex!</p>
+        							</div><!-- /.error -->
+
+        							<div class="error">
+                                        <p>{{errorMessage}}</p>
+        							</div><!-- /.error -->
+
+    						<div class="form-actions">
+    						    <div class="message-status message-status-ok" ng-if="messageStatusVisible">Успешно сохранено</div>
+    							<input type="submit" value="Сохранить" tabindex="6" ng-disabled="accountForm.$invalid" class="btn btn-sm btn-success btn-bold form-btn">
+    						</div><!-- /.form-actions -->
+    					</form>
+
+                     </div>

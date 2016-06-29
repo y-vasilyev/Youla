@@ -1,0 +1,147 @@
+<div class="modal-header">
+	<h2 class="modal-title" id="modalSignupFormLabel">Регистрация</h2>
+
+	<p>
+	 Пожалуйста,...
+	</p>
+</div>
+<div class="modal-body">
+	<div class="form form-secondary form-signup-modal">
+		<form ng-submit="signUp(signinForm.$valid)" name="signinForm" novalidate>
+			<div class="form-body">
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-row">
+                            <label for="field-first-name" ng-class="{ 'has-error-names' : signinForm.DisplayName.$invalid && !signinForm.DisplayName.$pristine }" class="form-label form-label-alpha">Как к вам обращаться?</label>
+
+							<div class="form-controls">
+                                <input type="text" focus-if ng-minlength="2" ng-model="user.DisplayName"
+                                		class="form-control" name="DisplayName" id="field-first-name"
+                                		autocomplete="off"
+                                		placeholder="" tabindex="1" required />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-6">
+						<div class="form-row">
+                            <label for="field-PhoneNumber" ng-class="{ 'has-error-names' : signinForm.PhoneNumber.$invalid && !signinForm.PhoneNumber.$pristine }" class="form-label form-label-alpha">Телефон</label>
+
+							<div class="form-controls">
+                                <input type="text" ng-minlength="2" ng-model="user.PhoneNumber" class="form-control"
+                                		autocomplete="off"
+                                        ng-pattern="/^[0-9]{11}$/"
+                                		name="PhoneNumber" id="field-PhoneNumber" placeholder="79876543210" tabindex="2" required />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+				</div><!-- /.row -->
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-row">
+                            <label for="field-Email" class="form-label form-label-alpha" ng-class="{ 'has-error-names' : signinForm.Email.$invalid && !signinForm.Email.$pristine }">E-mail</label>
+
+							<div class="form-controls">
+								<input type="Email"
+                                   name="Email"
+                                   ng-model="user.Email"
+                                   tabindex="3"
+                                   placeholder="Например, petr@2gis.ru"
+                                   ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                              		autocomplete="off"
+                                   required
+	                           		class="form-control" id="field-Email" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-6">
+						<div class="form-row">
+                            <label for="field-Email2" class="form-label form-label-alpha" ng-class="{ 'has-error-names' : signinForm.Email2.$invalid && !signinForm.Email2.$pristine }">E-mail ещё раз</label>
+
+							<div class="form-controls">
+								<input type="Email"
+                                   name="Email2"
+                                   ng-model="user.Email_too"
+                                   tabindex="3"
+                                   placeholder="Email ещё раз"
+                                   ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                              		autocomplete="off"
+                                   required
+	                           		class="form-control" id="field-Email2" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+				</div><!-- /.row -->
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-row">
+                            <label for="field-BirthDate" class="form-label form-label-alpha" ng-class="{ 'has-error-names' : signinForm.BirthDate.$invalid && !signinForm.BirthDate.$pristine }">Дата рождения: дд/мм/гггг </label>
+
+							<div class="form-controls">
+        						<input type="BirthDate"
+                                   name="BirthDate"
+
+                                   moment-picker="user.BirthDate_set"
+                                   format="DD.MM.YYYY"
+                                   today="true"
+                                   start-view="day"
+
+                                   ng-model="user.BirthDate_set"
+
+                                   tabindex="3"
+                                   placeholder="dd.mm.yyyy"
+                                   ng-pattern="/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/"
+                                	autocomplete="off"
+        				        	class="form-control" id="field-BirthDate" />
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+
+					<div class="col-md-6">
+						<div class="form-row">
+
+                            <label for="field-Sex" class="form-label form-label-alpha" ng-class="{ 'has-error-names' : 0 }">Пол:</label>
+
+    						<ul class="list-radios">
+                				<li ng-repeat="item in genreList">
+    								<div class="radio-secondary">
+                                        <input type="radio" ng-model="user.Sex" ng-value="item.value" name="Sex" id="field-{{ item.text }}" />
+
+                						<label for="field-{{ item.text }}" class="form-label form-control">{{ item.text }}</label>
+    								</div><!-- /.radio -->
+    							</li>
+    						</ul><!-- /.list-radios -->
+
+
+						</div><!-- /.form-row -->
+					</div><!-- /.col-md-6 -->
+				</div><!-- /.row -->
+
+				<div class="error" ng-show="signinForm.$invalid">
+                    <p ng-show="signinForm.DisplayName.$invalid && !signinForm.DisplayName.$pristine" class="help-block">Oops! You haven't entered your name!</p>
+                    <p ng-show="signinForm.DisplayName.$error.minlength" class="help-block">First name must be a minimum of 2 letters</p>
+
+                    <p ng-show="signinForm.PhoneNumber.$invalid && !signinForm.PhoneNumber.$pristine" class="help-block">Oops! You haven't entered your phone!</p>
+                    <p ng-show="signinForm.PhoneNumber.$error.minlength" class="help-block">PhoneNumber name must be a minimum of 15 numbers</p>
+
+                    <p ng-show="signinForm.Email.$invalid && !signinForm.Email.$pristine" class="help-block">Please enter a valid Email address</p>
+
+                    <p ng-show="signinForm.Sex.$invalid && !signinForm.Sex.$pristine" class="help-block">Don't forget to select a Sex!</p>
+				</div><!-- /.error -->
+
+				<div class="error">
+                    <p>{{errorMessage}}</p>
+				</div><!-- /.error -->
+
+			</div><!-- /.form-body -->
+
+			<div class="form-actions">
+				<input type="submit" value="Зарегистрироваться" tabindex="6" ng-disabled="signinForm.$invalid" class="btn btn-sm btn-success btn-bold form-btn">
+			</div><!-- /.form-actions -->
+		</form>
+	</div><!-- /.form -->
+</div>

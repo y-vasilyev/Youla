@@ -1,0 +1,78 @@
+<div class="modal-header">
+	<h2 class="modal-title" id="modalLogInLabel">Вход</h2>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form form-secondary form-login-modal">
+				<form ng-submit="loginEmail(login.$valid)" ng-show="!showSignUP" name="login" novalidate>
+					<div class="form-body">
+						<div class="form-row" ng-class="{'field-error' : is_error}">
+							<label for="field-email" class="form-label form-label-alpha">Email</label>
+
+							<div class="form-controls">
+								<input class="form-control" id="field-email"  type="email"
+									focus-if
+                                   name="UserName"
+                                   ng-model="userLogin.UserName"
+                                   placeholder="Email"
+                                   ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+                                   tabindex="1"
+                                   required>
+
+								<i ng-show="is_error" class="fa fa-exclamation-triangle"></i>
+
+								<div class="error">
+                                    <p ng-show="login.UserName.$invalid && !login.UserName.$pristine" >Enter a valid email.</p>
+                                    <p ng-if="noAccountYet"  >{{errorMessage}} <a href="" ng-click="close()">Signup</a></p>
+                                    <p>{{errorMessage1}}</p>
+								</div><!-- /.error -->
+
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+
+						<div class="form-row" ng-class="{'field-error' : is_error}">
+							<label for="field-password" class="form-label form-label-alpha">Password</label>
+
+							<div class="form-controls">
+								<input class="form-control" id="field-password" value="" placeholder=""
+								type="password" ng-model="userLogin.Password" name="Password" required tabindex="2">
+
+								<div class="error">
+                                    <p ng-show="login.Password.$invalid && !login.Password.$pristine" >Enter a valid password.</p>
+								</div><!-- /.error -->
+
+
+							</div><!-- /.form-controls -->
+						</div><!-- /.form-row -->
+
+						<div class="form-row">
+							<ul class="list-checkboxes list-checkboxes-alpha">
+								<li>
+									<div class="checkbox">
+										<input type="checkbox" ng-model="userLogin.Remember" name="Remember" id="field-stay-signed" checked>
+
+										<span class="btn btn-gray btn-xs">
+											<i class="fa fa-check"></i>
+										</span><!-- /.btn btn-xs -->
+
+										<label for="field-stay-signed" class="form-label">Запомнить меня</label>
+									</div><!-- /.checkbox -->
+								</li>
+							</ul>
+
+							<p class="forgotten-pass">
+								<a ng-click="showPopupForgetPassword($event)" href="#">Забыли пароль?</a>
+							</p><!-- /.forgotten-pass -->
+						</div><!-- /.form-row -->
+					</div><!-- /.form-body -->
+
+					<div class="form-actions">
+						<input ng-disabled="login.$invalid" type="submit" value="Log In" class="btn btn-sm btn-success btn-bold form-btn">
+					</div><!-- /.form-actions -->
+				</form>
+			</div><!-- /.form -->
+		</div><!-- /.col-md-6 -->
+
+	</div><!-- /.row -->
+</div>

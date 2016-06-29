@@ -1,0 +1,41 @@
+<h1 class="title">Password Reset </h1>
+
+<form name="form" novalidate="novalidate" ng-submit="confirmForgetPassword()">
+  <div class="list">
+    <label class="item item-input">
+      <span class="input-label">Email</span>
+      <input type="email"
+             name="input"
+             ng-model="confirmForgetUser.email"
+             placeholder="Registered Email address "
+             ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"
+             required>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">New Password</span>
+      <input type="password" ng-model="confirmForgetUser.password" placeholder="New password">
+    </label>
+
+    <label class="item item-input">
+      <span class="input-label">Confirm New Password</span>
+      <input type="password"
+             ng-model="user.verify"
+             placeholder="Confirm new password"
+             nx-equal-ex="confirmForgetUser.password"
+             name="verify">
+    </label>
+    <label class="item assertive" ng-show="form.verify.$error.nxEqualEx">
+      <span><i class="ion ion-alert-circled"></i> Password must be equal!</span>
+    </label>
+
+      <label class="item assertive" ng-if="serverSuccess == false "><i class="ion ion-heart-broken"></i> Something went wrong, please contact team </label>
+      <label class="item balanced" ng-if="serverSuccess == true "><i class="ion ion-heart"></i> You being redirected to Home page</label>
+
+
+    <label class="item" ng-show="!form.verify.$error.nxEqualEx">
+      <button class="button button-block button-positive" type="submit">Send</button>
+    </label>
+
+
+  </div>
+</form>

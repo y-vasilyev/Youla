@@ -1,0 +1,41 @@
+<a href="" ng-click="openModal()"> {{vm.userAvatarText}}</a>
+
+<div class="list">
+    <li class="item item-avatar">
+        <img ng-src="{{vm.userAvatarStatus}}"/>
+
+        <h2>{{userInfo.first_name}}</h2>
+
+        <p>{{userInfo.last_name}}</p>
+    </li>
+
+    <li class="item item-icon-left">
+        <i class="icon ion-email"></i>
+        {{userInfo.email}}
+    </li>
+    <li class="item item-icon-left" ng-if="userInfo.nationality">
+        <i class="icon ion-location"></i>
+        {{userInfo.nationality}}
+    </li>
+    <li class="item item-icon-left" ng-if="!userInfo.nationality">
+        <i class="icon ion-location"></i>
+        <input type="date"/>
+     </li>
+
+
+    <li class="item item-icon-left">
+        <i class="icon ion-calendar"></i>
+        Created :<span class="item-note">
+
+ 			<span title="{{userInfo.created_at | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}">{{userInfo.created_at  | amTimeAgo}}</span>
+		</span>
+    </li>
+    <li class="item item-icon-left">
+        <i class="icon ion-clock"></i>
+        Last Login :<span class="item-note">
+		{{userInfo.last_login | amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}
+		</span>
+    </li>
+
+
+</div>

@@ -1,0 +1,15 @@
+История работ
+
+<div ui-grid="gridOptions" class="grid"></div>
+
+<input class="button-user-grab-money" type="button" value="Получить мои деньги" ng-click="vm.grab_money($event)" />
+
+<div class="user-grab-inform user-grab-inform-ok" ng-if="grabMessage">{{grabMessage}}</div>
+<div class="user-grab-inform user-grab-inform-error" ng-if="grabError">Запрос на получение денег был отправлен, но какая-то ошибка произошла</div>
+
+
+<div ng-include="'templates/account/moneyStat.html'"></div>
+
+
+<br clear="both" />
+<a ui-sref="app.money">Деньги</a>

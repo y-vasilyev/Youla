@@ -1,0 +1,68 @@
+<div class="modal-header">
+	<h2 class="modal-title" id="modalHelpContactLabel">Привязать зацепку к карте</h2>
+</div>
+<div class="modal-body">
+
+	<div class="form form-secondary">
+		<form ng-submit="signUp(orgForm.$valid)" name="orgForm" novalidate>
+			<div class="form-body">
+
+    			<div class="org-geo-info-image">
+
+                    <div id="mapGeo" class="map">
+                    	<div class="map-geo-search-list">
+                          <select id="map-geo-search-list-select" class="form-control"
+                          	ng-model="data2.search_near"
+                          	ng-change="geo_select()"
+                          	ng-options="option.name for option in geo_search">
+						    <option value="">Выберите ближайшие объект</option>
+						  </select>
+                    	</div>
+                    </div>
+
+    			</div>
+
+    			<div class="org-geo-info-fields">
+
+    				<div class="row">
+    					<div class="col-md-12">
+    						<div class="form-row">
+                                <label for="field-address" class="form-label form-label-alpha">Адрес</label>
+
+    							<div class="form-controls">
+                                    <input type="text" focus-if ng-minlength="2" ng-model="data2.address"
+                                    		class="form-control" name="address" id="field-address"
+                                    		autocomplete="off"
+                                    		placeholder="" tabindex="1" required />
+    							</div><!-- /.form-controls -->
+    						</div><!-- /.form-row -->
+    					</div><!-- /.col-md-6 -->
+   					</div>
+
+    				<div class="row">
+    					<div class="col-md-12">
+    						<div class="form-row">
+                                <label class="form-label form-label-alpha">Точка привязки</label>
+
+    							<div class="form-controls">
+    							  <strong  ng-bind="position.lat"></strong> / <strong ng-bind="position.lng"></strong>
+    							</div><!-- /.form-controls -->
+    						</div><!-- /.form-row -->
+    					</div><!-- /.col-md-6 -->
+   					</div>
+
+				</div>
+
+				<div class="clear"></div>
+
+				<div class="form-actions form-actions-right">
+					<input ng-click="vm.submit($event)" type="submit" value="Привязать" class="btn btn-bold btn-sm btn-success">
+					<a ng-click="vm.cancel($event)" href="#" class="btn btn-sm btn-bold btn-default btn-transparent">Отмена</a>
+				</div><!-- /.form-actions -->
+
+			</div><!-- /.form-body -->
+
+		</form>
+	</div><!-- /.form -->
+
+</div>

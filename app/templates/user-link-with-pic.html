@@ -1,0 +1,25 @@
+<ul class="user-menu">
+  <li ng-if="!isLoggedIn">
+    <a href="#" ng-click="popup_signup($event)">Регистрация</a>
+  </li>
+
+  <li ng-if="!isLoggedIn">
+    <a href="#" ng-click="popup_login($event)">Вход</a>
+  </li>
+
+  <li ng-if="isLoggedIn">
+    <a ui-sref="app.account">
+    	{{user.DisplayName}}
+    </a>
+  </li>
+
+  <li ng-if="isLoggedIn">
+    <a ui-sref="app.home">
+    	Личный кабинет
+    </a>
+  </li>
+
+  <li ng-if="isLoggedIn">
+    <a ng-click="logout()" href="#">Выход</a>
+  </li>
+</ul>

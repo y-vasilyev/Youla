@@ -1,0 +1,8 @@
+http://labs.easyblog.it/maps/leaflet-search/
+
+http://tombatossals.github.io/angular-leaflet-directive/examples/0000-viewer.html#/mixed/geojson-events-example
+
+http://leafletjs.com/plugins.html
+
+http://api.2gis.ru/doc/maps/manual/loading/
+http://api.2gis.ru/doc/geo/search/

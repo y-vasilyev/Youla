@@ -1,0 +1,18 @@
+<h3>
+  Деньги
+</h3>
+
+<input class="button-user-grab-money" type="button" value="Получить мои деньги" ng-click="vm.grab_money($event)" />
+
+<div class="user-grab-inform user-grab-inform-ok" ng-if="grabMessage">{{grabMessage}}</div>
+<div class="user-grab-inform user-grab-inform-error" ng-if="grabError">Запрос на получение денег был отправлен, но какая-то ошибка произошла</div>
+
+
+<div ng-include="'templates/account/moneyStat.html'"></div>
+
+<div class="clear"></div>
+
+
+<input type="button" value="Выписка" ng-click="vm.get_moneyHistory($event)" />
+
+<div ui-grid="gridMoneyHistory" class="grid" ng-if="is_visible_moneyHistory"></div>
