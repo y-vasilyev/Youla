@@ -48,8 +48,9 @@
             var version = !$window.localStorage['version'] ? 1 : $window.localStorage['version'];
 
             if (version != versionNew) {
-            	$window.localStorage['version'] = versionNew;
             	$window.localStorage.clear();
+
+            	$window.localStorage['version'] = versionNew;
             }
 
 
