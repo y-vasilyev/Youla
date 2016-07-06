@@ -41,10 +41,10 @@
         .run(function($httpBackend, $rootScope, $location, $timeout, $window, $state, $stateParams) {
 
         	var useMock = true;
-        	//useMock = false;
+        	useMock = false;
 
 
-        	var versionNew = 2;
+        	var versionNew = 3;
             var version = !$window.localStorage['version'] ? 1 : $window.localStorage['version'];
 
             if (version != versionNew) {
@@ -53,8 +53,7 @@
             	$window.localStorage['version'] = versionNew;
             }
 
-
-        	if (useMock) {
+			if (useMock) {
             	var ME = {
             		"Id" : 1,
             		"Email" : "president@kremlin.ru",
@@ -647,6 +646,19 @@
           			whenGET(/.*/).
           			passThrough();
         	}
+			else
+			{
+				$httpBackend.
+					whenGET(/.*/).
+					passThrough();
+				$httpBackend.
+					whenPOST(/.*/).
+					passThrough();
+
+				$httpBackend.
+					whenPATCH(/.*/).
+					passThrough();
+			}
 
 
 
@@ -887,6 +899,7 @@
         });
 
     angular.element(document).ready(function(){
+
         angular.bootstrap(document.getElementById('entryPoint'), ['youla']);
     });
 

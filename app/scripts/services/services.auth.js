@@ -38,7 +38,7 @@
 
             logout: function(){
                 return Restangular.all('auth/logout')
-                    .post()
+                    .get('')
                     .then(function(response){
 
 
@@ -62,7 +62,6 @@
             },
 
             signUpEmail: function(data) {
-
                 return Restangular.all('register')
                     .post(data)
                     .then(function(response){
@@ -78,7 +77,6 @@
             },
 
             loginEmail: function(data) {
-
                 return Restangular.all('auth')
                     .post(data)
                     .then(function(response){
