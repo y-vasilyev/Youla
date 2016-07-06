@@ -484,11 +484,13 @@
 
         	Schedule_convert : function(item) {
 
-                item.workStartHour = moment(item.Work[0]).hour();
-                item.workStartMin = moment(item.Work[0]).minute();
+				if(item.Work) {
+					item.workStartHour = moment(item.Work[0]).hour();
+					item.workStartMin = moment(item.Work[0]).minute();
 
-                item.workEndHour = moment(item.Work[1]).hour();
-                item.workEndMin = moment(item.Work[1]).minute();
+					item.workEndHour = moment(item.Work[1]).hour();
+					item.workEndMin = moment(item.Work[1]).minute();
+				}
 
 				item.Break = item.Break || new Array();
 
@@ -590,6 +592,7 @@
                             dataFactory.saveOrgData(o.Id, CardType, o)
                                 .then(function(response) {
                                     if (response.status === 200) {
+										console.log(response);
 
                                 		$scope.data = o;
                                 		repaintOrg();
