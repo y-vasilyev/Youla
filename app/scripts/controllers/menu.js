@@ -21,6 +21,7 @@
 
             var vm = this;
 
+
             $scope.isItemActive = function(item){
                 var location = window.location.href;
                 if(location.indexOf(item) > -1){

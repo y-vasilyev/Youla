@@ -202,7 +202,7 @@
 
             setWorkZone: function(id) {
 
-                return Restangular.all('/Territories/Assign/')
+                return Restangular.all('Territories/Assign/')
                     .post({TerritoryId : id})
                     .then(function(success){
                         $log.debug("work zone :" + success);

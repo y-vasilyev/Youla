@@ -464,8 +464,7 @@
                 dataFactory.getZoneData()
                 	.then(function(result) {
 
-
-                		var c = result.data.list;
+                		var c = result.data;
                 		var i, l = c.length, e;
                 		for (i=0; i < l; i++) {
                 			e = c[i];
@@ -484,17 +483,22 @@
         	},
 
         	Schedule_convert : function(item) {
-                item.workStartHour = Math.floor(item.Work[0]/60);
-                item.workStartMin = item.Work[0] - item.workStartHour*60;
 
-                item.workEndHour = Math.floor(item.Work[1]/60);
-                item.workEndMin = item.Work[1] - item.workEndHour*60;
+                item.workStartHour = moment(item.Work[0]).hour();
+                item.workStartMin = moment(item.Work[0]).minute();
 
-                item.breakStartHour = Math.floor(item.Break[0]/60);
-                item.breakStartMin = item.Break[0] - item.breakStartHour*60;
+                item.workEndHour = moment(item.Work[1]).hour();
+                item.workEndMin = moment(item.Work[1]).minute();
 
-                item.breakEndHour = Math.floor(item.Break[1]/60);
-                item.breakEndMin = item.Break[1] - item.breakEndHour*60;
+				item.Break = item.Break || new Array();
+
+
+				item.breakStartHour = moment(item.Break[0]).hour();
+				item.breakStartMin = moment(item.Break[0]).minute();
+
+				item.breakEndHour = moment(item.Break[1]).hour();
+				item.breakEndMin = moment(item.Break[1]).minute();
+
         	},
 
         	page_org : function($scope, vm, CardType) {
@@ -527,16 +531,19 @@
 
                 dataFactory.getOrgData(id, CardType)
                 	.then(function(result) {
-                		var d = result.data.data;
+                		var d = result.data;
 
                 		d.type = CardType;
 
 
 
         				var o = d.Schedule;
-                        o.forEach(function(item, index) {
-                        	that.Schedule_convert(item);
-                        });
+
+						if(o) {
+							o.forEach(function (item, index) {
+								that.Schedule_convert(item);
+							});
+						}
 
 
 
@@ -548,7 +555,7 @@
 
                 	    	$scope.map = map;
 
-                	    	if (d.Coordinates.Lat && d.Coordinates.Lon) {
+                	    	if (d.Coordinates && d.Coordinates.Lat && d.Coordinates.Lon) {
 
                 	    		map.setView([d.Coordinates.Lat, d.Coordinates.Lon], 16);
 
@@ -816,6 +823,7 @@
         	page_orgGeo : function($scope, vm) {
         	    var funcs = this;
 
+
         	    var d = $scope.data;
 
                 $scope.data2 = d;
@@ -1024,7 +1032,7 @@
 
                 dataFactory.getCityZones(id)
                 	.then(function(result) {
-                		var zones = result.data.zones;
+                		var zones = result.data.Territories;
                 		$scope.gridOptions.data = zones;
                 		$scope.cityTitle = result.data.cityTitle;
 
@@ -1105,7 +1113,6 @@
                                 vm.submit = function($event) {
                                     dataFactory.setWorkZone(id)
                                         .then(function(res) {
-
                                             if (res.data.status == 'ok') {
 
                         						var j = that.get_el_by_field($scope.gridOptions.data, 'Id', id);
@@ -1131,9 +1138,9 @@
                                 "type": "FeatureCollection",
                                 "features": []
                             };
-                            var i, e, l = result.data.zones.length, gj, featuresLayer, crds, fillColor;
+                            var i, e, l = result.data.Territories.length, gj, featuresLayer, crds, fillColor;
                             for (i=0; i < l; i++) {
-                            	e = result.data.zones[i];
+                            	e = result.data.Territories[i];
 
                             	e.StatusTitle = that.city_status2title[e.Status];
 
@@ -1712,7 +1719,7 @@
                 var fd = new FormData();
                 fd.append('image', file);
                 $http({
-                    method: 'PATCH',
+                    method: 'POST',
                     url: uploadUrl,
                     data: fd,
                     transformRequest: angular.identity,

@@ -4,8 +4,8 @@
         .module('configuration', ['restangular'])
         .constant('API_CONSTANT', {
             user_agent: 'curl/7.37.1',
-            Host: 'http://api.yula.loc/',
-            Accept: 'application/hal+json; version=1.0'
+            Host: 'http://crowd.dev:3128/api/',
+            Accept: 'application/json'
         })
           .config(['RestangularProvider', 'API_CONSTANT', '$logProvider', '$httpProvider',
         		function(RestangularProvider, API_CONSTANT, $logProvider, $httpProvider) {
