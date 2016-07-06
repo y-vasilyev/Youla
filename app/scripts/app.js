@@ -41,7 +41,7 @@
         .run(function($httpBackend, $rootScope, $location, $timeout, $window, $state, $stateParams) {
 
         	var useMock = true;
-        	useMock = false;
+        	//useMock = false;
 
 
         	var versionNew = 3;
@@ -411,7 +411,7 @@
 
     			$httpBackend.
           			whenGET(/Branch\/\d+\/Territories/).
-          			respond({zones: city_zones, cityTitle:'Ашхабад'});
+          			respond({Territories: city_zones, cityTitle:'Ашхабад'});
 
     			$httpBackend.
           			whenGET(/Reference\/ScheduleTemplates/).
@@ -539,7 +539,7 @@
           				org_data['TerritoryId'] = id*2;
           				org_data['BranchId'] = id*3;
 
-          				var ret = {'data' : org_data};
+          				var ret = org_data;
 
         				return [200, ret, {}];
       				}
@@ -547,15 +547,16 @@
 
     			$httpBackend.
           			whenGET(/verificationResults/).
-          			respond({list: zone_data, cityTitle:'Ашхабад', zoneTitle:'Зона 1'});
+					respond(zone_data);
+          			//respond({list: zone_data, cityTitle:'Ашхабад', zoneTitle:'Зона 1'});
 
 
     			$httpBackend.
-          			whenPATCH(/verificationResults\/(Card|Feature)\/\d+/).
+          			whenPATCH(/verificationResults\/Feature\/\d+/).
           			respond(function(method, url, data) {
           				var ret = {'status' : 'ok'};
 
-       	 				var data = angular.fromJson(data);
+       	 				var data = angular.fromJson(data.Feature);
 
           				var saveData = {};
           				Object.keys(org_data).forEach(function(key) {
@@ -570,7 +571,29 @@
       				}
       			);
 
-    			$httpBackend.
+
+				$httpBackend.
+					whenPATCH(/verificationResults\/Card\/\d+/).
+					respond(function(method, url, data) {
+						var ret = {'status' : 'ok'};
+
+						var data = angular.fromJson(data.Card);
+
+						var saveData = {};
+						Object.keys(org_data).forEach(function(key) {
+							if (typeof data[key] != 'undefined') {
+								saveData[key] = data[key];
+							}
+						});
+
+						$window.localStorage['ORG'] = JSON.stringify(saveData);
+
+						return [200, ret, {}];
+					}
+				);
+
+
+				$httpBackend.
           			whenPOST(/verificationResults\/changeStatus/).
           			respond(function(method, url, data) {
           				var ret = {'status' : 'ok'};
