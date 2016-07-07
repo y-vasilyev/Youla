@@ -338,13 +338,13 @@
 
                 dataFactory.getUserHistory()
                 	.then(function(result) {
-                		$scope.gridOptions.data = result.data;
+                		$scope.gridOptions.data = result.data.Territories;
                 	}
                 );
 
                 dataFactory.getMoney()
                 	.then(function(result) {
-                		$scope.data = result.data.data;
+                		$scope.data = result.data;
                 	}
                 );
 
@@ -392,7 +392,7 @@
 
                 dataFactory.getMoney()
                 	.then(function(result) {
-                		$scope.data = result.data.data;
+                		$scope.data = result.data;
 
                 		var c = $scope.data['BillingItems'];
                 		var i, l = c.length, e;
