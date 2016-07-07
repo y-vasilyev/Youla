@@ -517,6 +517,7 @@
         	    	var d = $scope.data;
 
                 	$scope.titleOrg = d.CardName;
+					$scope.data.CreationDateUtc = moment(d.CreationDateUtc).toDate();
                 	$scope.statusOrg = that.status2title[d.Status] || "not find";
                 	$scope.statusClassOrg = 'org-info-status-' + that.status2class[d.Status] || "notfind";
         	    };
