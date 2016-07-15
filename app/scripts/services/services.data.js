@@ -189,8 +189,13 @@
             saveOrgData: function(id, type, data) {
             	var urlType = type == 'org' ? 'Card' : 'Feature';
 
+                var sendData = {};
+                sendData[urlType] = data;
+                console.log(sendData);
+
+
                 return Restangular.all('verificationResults/'+urlType+'/'+id)
-                    .patch(data)
+                    .patch(sendData)
                     .then(function(success){
                         $log.debug("org Update data :" + success);
                         return success;
