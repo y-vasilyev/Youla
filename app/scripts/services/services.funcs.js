@@ -1001,7 +1001,7 @@
         								</a>\
           							</li>\
           							      \
-          							<li>   \
+          							<li ng-if="row.entity.Status == \'New\'">   \
         								<a ng-click="grid.appScope.vm.zoneTakeWork($event, row.entity.Id)" href="#">\
            							     Взять в работу                                         \
         								</a>                                                     \

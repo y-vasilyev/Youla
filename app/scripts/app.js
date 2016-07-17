@@ -600,7 +600,7 @@
 
        	 				var data = angular.fromJson(data);
 
-          				var saveData = angular.fromJson($window.localStorage['ORG']);
+          				var saveData = angular.fromJson($window.localStorage['ORG'] || {});
           				Object.keys(data).forEach(function(key) {
           					if (typeof data[key] != 'undefined') {
     	      					saveData[key] = data[key];
