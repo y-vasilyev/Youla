@@ -288,28 +288,6 @@
 					</div><!-- /.col-md-6 -->
 
 
-					<div class="col-md-12">
-						<hr>
-						<div class="form-row">
-                            <label class="form-label form-label-alpha">
-                             Комментарии
-                            </label>
-
-                            <div class="org-comment" ng-repeat="row in Comments"><strong>{{row.CreatedBy}}</strong><br />{{row.Text}}</div>
-
-
-							<div class="form-controls">
-                                <input type="text" ng-minlength="2" ng-model="vm.newcomment" class="form-control"
-                                		autocomplete="off"
-                                		name="newcomment" placeholder="" tabindex="2" />
-                                <br />
-                                <input ng-click="vm.commentAdd($event)" type="submit" value="Добавить комментарий" class="btn btn-sm btn-success btn-bold form-btn" />
-							</div><!-- /.form-controls -->
-						</div><!-- /.form-row -->
-					</div><!-- /.col-md-6 -->
-
-
-
 				</div><!-- /.row -->
 
 
@@ -336,6 +314,31 @@
                     <p>{{errorMessage}}</p>
 				</div><!-- /.error -->
 
+	</form>
+
+
+	<form ng-submit="vm.commentAdd($event)" name="orgFormComment">
+    	<div class="row">
+    		<div class="col-md-12">
+    			<hr>
+    			<div class="form-row">
+                    <label class="form-label form-label-alpha">
+                     Комментарии
+                    </label>
+
+                    <div class="org-comment" ng-repeat="row in Comments"><strong>{{row.CreatedBy}}</strong><br />{{row.Text}}</div>
+
+
+    				<div class="form-controls">
+                        <input type="text" ng-minlength="2" ng-model="vm.newcomment" class="form-control"
+                        		autocomplete="off"
+                        		name="newcomment" placeholder="" tabindex="2" />
+                        <br />
+                        <input ng-click="vm.commentAdd($event)" type="button" value="Добавить комментарий" class="btn btn-sm btn-success btn-bold form-btn" />
+    				</div><!-- /.form-controls -->
+    			</div><!-- /.form-row -->
+    		</div><!-- /.col-md-6 -->
+    	</div><!-- /.row -->
 	</form>
 
 </div>
