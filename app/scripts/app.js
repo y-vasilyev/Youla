@@ -41,7 +41,7 @@
         .run(function($httpBackend, $rootScope, $location, $timeout, $window, $state, $stateParams) {
 
         	var useMock = true;
-        	useMock = false;
+        	//useMock = false;
 
 
         	var versionNew = 3;
@@ -600,7 +600,7 @@
 
        	 				var data = angular.fromJson(data);
 
-          				var saveData = angular.fromJson($window.localStorage['ORG']);
+          				var saveData = angular.fromJson($window.localStorage['ORG'] || {});
           				Object.keys(data).forEach(function(key) {
           					if (typeof data[key] != 'undefined') {
     	      					saveData[key] = data[key];
