@@ -4,8 +4,8 @@
         .module('configuration', ['restangular'])
         .constant('API_CONSTANT', {
             user_agent: 'curl/7.37.1',
-            //Host: 'http://crowd.dev:3128/api/',
-            Host: 'http://api.youla.loc/',
+            Host: 'http://crowd.dev:3128/api/',
+            //Host: 'http://api.youla.loc/',
             Accept: 'application/json'
         })
           .config(['RestangularProvider', 'API_CONSTANT', '$logProvider', '$httpProvider',

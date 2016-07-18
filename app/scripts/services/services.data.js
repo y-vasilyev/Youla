@@ -152,9 +152,9 @@
             },
             */
 
-            getZoneData: function() {
+            getZoneData: function(id) {
 
-                return Restangular.all('verificationResults')
+                return Restangular.all('verificationResults/'+id)
                     .get('')
                     .then(function(success){
                         return success;

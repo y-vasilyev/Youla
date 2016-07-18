@@ -193,11 +193,15 @@
                 	var es = e0*60+e1;
                 	var ee = e2*60+e3;
 
-                	item.Work[0] = ws;
-                	item.Work[1] = we;
+					if(item.Work) {
+						item.Work[0] = ws;
+						item.Work[1] = we;
+					}
 
-                	item.Break[0] = es;
-                	item.Break[1] = ee;
+					if(item.Break) {
+						item.Break[0] = es;
+						item.Break[1] = ee;
+					}
 
                 	hindex.push([item.ScheduleDays, ws, we]);
 
@@ -425,6 +429,8 @@
         	    var funcs = this;
         	    var that = this;
 
+				var id = $stateParams.id;
+
                 $scope.gridOptions = {
                     enableSorting: true,
                     onRegisterApi: function( gridApi ) {
@@ -461,10 +467,10 @@
                     ]
                 };
 
-                dataFactory.getZoneData()
+                dataFactory.getZoneData(id)
                 	.then(function(result) {
 
-                		var c = result.data;
+                		var c = result.data.Results;
                 		var i, l = c.length, e;
                 		for (i=0; i < l; i++) {
                 			e = c[i];
@@ -475,8 +481,8 @@
 
                 		$scope.gridOptions.data = c;
 
-                		$scope.cityTitle = result.data.cityTitle;
-                		$scope.zoneTitle = result.data.zoneTitle;
+                		$scope.cityTitle = result.data.CityTitle;
+                		$scope.zoneTitle = result.data.ZoneTitle;
                 	}
                 );
 
@@ -538,6 +544,8 @@
                 		var d = result.data;
 
                 		d.type = CardType;
+						d.Contacts = d.Contacts == null ? [] : d.Contacts;
+						d.Comments = [];
 
 
 
@@ -648,7 +656,7 @@
                         $scope.checkForm = function(invalid) {
                             var o = $scope.data;
 
-                            if (!o.Contacts.length || !o.Schedule.length) {
+                            if (!o.Contacts || !o.Contacts.length || !o.Schedule.length) {
                             	invalid = true;
                             } else {
                             	o.Contacts.forEach(function(item) {
@@ -755,7 +763,7 @@
                         //---------------------
                         dataFactory.getComments(id, entityType)
                         	.then(function(result) {
-                        		var d = result.data.data;
+                        		var d = result.data.Comments;
 
                         		$scope.Comments = d;
                         	}
